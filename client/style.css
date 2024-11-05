@@ -6,12 +6,23 @@ body {
     color: #202124;
   }
   
-  main {
+  main,
+  .api-key-banner {
     width: 100%;
     padding: 24px;
     max-width: 460px;
     margin: 0 auto;
     border-radius: 20px;
+  }
+  
+  .api-key-banner {
+    background-color: #FFDDB7;
+    font-weight: bold;
+    margin-bottom: 16px;
+  }
+  
+  .api-key-banner a {
+    color: var(--accent-color);
   }
   
   * {
@@ -33,7 +44,7 @@ body {
   h1::before {
     content: '';
     display: inline-block;
-    background: url(images/gemini.svg);
+    background: url(gemini.svg);
     width: 40px;
     height: 40px;
     background-size: cover;

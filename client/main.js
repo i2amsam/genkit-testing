@@ -1,28 +1,31 @@
-let form = document.querySelector('form');
-let output = document.querySelector('.output');
+import MarkdownIt from 'markdown-it';
+// import { maybeShowApiKeyBanner } from './gemini-api-banner';
+import './style.css';
 
-let selectedImage = document.querySelector('.image-choice:has(:checked) img')
+
+let form = document.querySelector('form');
+// let promptInput = document.querySelector('input[name="prompt"]');
+let output = document.querySelector('.output');
 
 form.onsubmit = async (ev) => {
     ev.preventDefault()
     output.textContent = "Generating...";
 
-    var form = new FormData(form);
+    let imageName = form.elements.namedItem('chosen-image').value;
 
-    dataToSend = new FormData()
-    payload = JSON.stringify(
+    let payload = JSON.stringify(
     { 
         data: {
-            photoUrl: "https://www.mercy.net/content/dam/mercy/en/images/orange-or-banana-20381.jpg"
+            photoUrl: `${window.location.origin}/${imageName}`
         }
     });
 
     var request = new XMLHttpRequest();
-    request.open("POST", "http://127.0.0.1:3400/recipieFlow");
+    request.open("POST", "http://localhost:3400/recipieFlow");
     request.setRequestHeader('Content-Type', 'application/json')
-    request.onload = function () {
+    request.onload = function (response) {
         // Read the response and interpret the output as markdown.
-        let md = window.markdownit();
+        let md = new MarkdownIt();
 
         response = JSON.parse(request.responseText).result;
         output.innerHTML = md.render(response.recipie);
