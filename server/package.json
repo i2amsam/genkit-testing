@@ -1,0 +1,17 @@
+{
+  "name": "server",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "authenticate": "gcloud auth application-default login",
+    "startup": "GENKIT_ENV=dev npx tsx ./src/index.ts --watch"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "genkit": "0.9.0-dev.3",
+    "@genkit-ai/vertexai": "0.9.0-dev.3"
+  }
+}
