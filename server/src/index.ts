@@ -43,37 +43,34 @@ const flowVersion = ai.defineFlow({
     return result.output
 });
 
-const promptVersion = ai.definePrompt({
-    model: gemini15Flash,
-    name: 'recipiePrompt',
-    input: {
-        schema: inputSchema
-    },
-    output: {
-        schema: outputSchema,
-        format: 'json'
-    }
-}, 
-'Use the ingrediants from this image {{media url=photoUrl}}'
-);
+// const promptVersion = ai.definePrompt({
+//     model: gemini15Flash,
+//     name: 'recipiePrompt',
+//     input: {
+//         schema: inputSchema
+//     },
+//     output: {
+//         schema: outputSchema,
+//         format: 'json'
+//     }
+// }, 
+// 'Use the ingredients from this image {{media url=photoUrl}}'
+// );
 
-
+// promptVersion({
+//     photoUrl: "https://www.mercy.net/content/dam/mercy/en/images/orange-or-banana-20381.jpg"
+// }).then((result) => {
+//     console.log("Got prompt result");
+//     const output = result.output;
+//     console.log(output.title);
+//     return result
+// });
 
 flowVersion({
     photoUrl: 'https://www.mercy.net/content/dam/mercy/en/images/orange-or-banana-20381.jpg'
 }).then(result => {
     console.log("Got flow result");
     console.log(result);
-});
-
-
-promptVersion({
-    photoUrl: 'https://www.mercy.net/content/dam/mercy/en/images/orange-or-banana-20381.jpg'
-}).then((result) => {
-    console.log("Got prompt result");
-    const output = result.output;
-    console.log(output.title);
-    return result
 });
 
 ai.startFlowServer({ 
