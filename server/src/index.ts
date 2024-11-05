@@ -14,11 +14,14 @@ const outputSchema = z.object({
     tags: z.array(z.string()).describe('Two to Four 1-word keyword tags for the recipie')
 });
 
-const rf = ai.defineFlow({
+
+const inputSchema = z.object({
+    photoUrl: z.string()
+});
+
+const flowVersion = ai.defineFlow({
     name: 'recipieFlow',
-    inputSchema: z.object({
-        photoUrl: z.string()
-    }),
+    inputSchema: inputSchema,
     outputSchema: outputSchema.or(z.null()),
 }, async (input) => {
     const result = (await ai.generate({
@@ -26,7 +29,7 @@ const rf = ai.defineFlow({
         messages: [
             { role: 'system', content: [{ text: 'Provide a delicious recipie for this user' }] },
             { role: 'user', content: [
-                    { text: 'Use the ingrediants from this image',}, 
+                    { text: 'Use the ingrediants from this image'}, 
                     { media: { url: input.photoUrl }} 
                 ]
             },
@@ -40,14 +43,39 @@ const rf = ai.defineFlow({
     return result.output
 });
 
-rf({
+const promptVersion = ai.definePrompt({
+    model: gemini15Flash,
+    name: 'recipiePrompt',
+    input: {
+        schema: inputSchema
+    },
+    output: {
+        schema: outputSchema,
+        format: 'json'
+    }
+}, 
+'Use the ingrediants from this image {{media url=photoUrl}}'
+);
+
+
+
+flowVersion({
     photoUrl: 'https://www.mercy.net/content/dam/mercy/en/images/orange-or-banana-20381.jpg'
 }).then(result => {
-    console.log("Got result");
+    console.log("Got flow result");
     console.log(result);
 });
 
 
+promptVersion({
+    photoUrl: 'https://www.mercy.net/content/dam/mercy/en/images/orange-or-banana-20381.jpg'
+}).then((result) => {
+    console.log("Got prompt result");
+    const output = result.output;
+    console.log(output.title);
+    return result
+});
+
 ai.startFlowServer({ 
-    flows: [rf]
+    flows: [flowVersion]
 });
