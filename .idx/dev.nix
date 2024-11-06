@@ -8,7 +8,9 @@
     pkgs.nodejs_20
   ];
   # Sets environment variables in the workspace
-  env = {};
+  env = {
+    GENKIT_ENV = "dev";
+  };
   idx = {
     # Search for the extensions you want on https://open-vsx.org/ and use "publisher.id"
     extensions = [
@@ -23,15 +25,18 @@
         # Open editors for the following files by default, if they exist:
         default.openFiles = [ "client/index.html" "server/src/index.js" ];
       };
-      # To run something each time the workspace is (re)started, use the `onStart` hook
+      onStart = {
+        start-server = "npx tsx --watch src/index.ts";
+      };
     };
     # Enable previews and customize configuration
     previews = {
       enable = true;
       previews = {
         web = {
-          command = ["npm" "run" "start-client" "--" "--port" "$PORT"];
+          command = [ "npm" "run" "dev" "--" "--port" "$PORT" ];
           manager = "web";
+          cwd = "client";
         };
       };
     };
