@@ -30,7 +30,7 @@
       enable = true;
       previews = {
         web = {
-          command = ["cd" "client" ";" "npm" "run" "dev" "--" "--port" "$PORT"];
+          command = ["npm" "run" "start-client" "--" "--port" "$PORT"];
           manager = "web";
         };
       };

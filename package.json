@@ -1,0 +1,12 @@
+{
+  "name": "genkit-testing",
+  "version": "1.0.0",
+  "description": "A sample app for showing using Gemini with Genkit",
+  "main": "server/src/index.ts",
+  "scripts": {
+    "start-client": "cd client && npm run dev",
+    "start-server": "cd server && npx tsx --watch src/index.ts"
+  },
+  "author": "",
+  "license": "ISC"
+}
