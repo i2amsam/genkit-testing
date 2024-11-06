@@ -1,13 +1,11 @@
 import MarkdownIt from 'markdown-it';
-import { maybeShowApiKeyBanner } from './gemini-api-banner';
 import './style.css';
 
-// 🔥🔥 FILL THIS OUT FIRST! 🔥🔥
+// 🔥🔥 Add Gemini API Key first! 🔥🔥
 // Get your Gemini API key by:
 // - Selecting "Add Gemini API" in the "Project IDX" panel in the sidebar
 // - Or by visiting https://g.co/ai/idxGetGeminiKey
 // Then update `.idx/dev.nix` GOOGLE_GENAI_API_KEY env variable
-let API_KEY = import.meta.env.VITE_GOOGLE_GENAI_API_KEY;
 
 let form = document.querySelector('form');
 // let promptInput = document.querySelector('input[name="prompt"]');
@@ -40,6 +38,3 @@ form.onsubmit = async (ev) => {
     request.send(payload);
     return false;
 }
-
-// You can delete this once you've filled out an API key
-maybeShowApiKeyBanner(API_KEY);

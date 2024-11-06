@@ -27,7 +27,7 @@
         default.openFiles = [ "client/index.html" "server/src/index.js" ];
       };
       onStart = {
-        auth-server = "cd server && npm run authenticate";
+        # auth-server = "cd server && npm run authenticate";
         start-server = "cd server && npm run dev";
       };
     };

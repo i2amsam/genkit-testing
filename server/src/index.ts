@@ -1,12 +1,11 @@
 import { genkit, getCurrentEnv, z } from 'genkit';
 import { googleAI, gemini15Flash } from '@genkit-ai/googleai'
 
-// 🔥 FILL THIS OUT FIRST! 🔥
+// 🔥🔥 Add Gemini API Key first! 🔥🔥
 // Get your Gemini API key by:
 // - Selecting "Add Gemini API" in the "Project IDX" panel in the sidebar
 // - Or by visiting https://g.co/ai/idxGetGeminiKey
-// This can also be provided as the GOOGLE_GENAI_API_KEY environment variable.
-//
+// Then update `.idx/dev.nix` GOOGLE_GENAI_API_KEY env variable
 
 const apiKey = process.env.GOOGLE_GENAI_API_KEY;  // Or set your API key
 
