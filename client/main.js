@@ -26,7 +26,7 @@ form.onsubmit = async (ev) => {
     });
 
     var request = new XMLHttpRequest();
-    request.open("POST", "http://localhost:3400/recipeFlow");
+    request.open("POST", "/recipeFlow");
     request.setRequestHeader('Content-Type', 'application/json')
     request.onload = function (response) {
         // Read the response and interpret the output as markdown.
