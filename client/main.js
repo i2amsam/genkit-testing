@@ -6,6 +6,7 @@ import './style.css';
 // Get your Gemini API key by:
 // - Selecting "Add Gemini API" in the "Project IDX" panel in the sidebar
 // - Or by visiting https://g.co/ai/idxGetGeminiKey
+// Then update `.idx/dev.nix` GOOGLE_GENAI_API_KEY env variable
 let API_KEY = import.meta.env.VITE_GOOGLE_GENAI_API_KEY;
 
 let form = document.querySelector('form');
