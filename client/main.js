@@ -16,7 +16,8 @@ form.onsubmit = async (ev) => {
     let payload = JSON.stringify(
     { 
         data: {
-            photoUrl: `${window.location.origin}/${imageName}`
+            //photoUrl: `${window.location.origin}/${imageName}`
+            photoUrl: 'crash'
         }
     });
 

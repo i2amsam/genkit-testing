@@ -1,12 +1,18 @@
-import vertexAI, { gemini15Flash } from '@genkit-ai/vertexai';
-import { genkit, z } from 'genkit';
+import { genkit, getCurrentEnv, z } from 'genkit';
+import { googleAI, gemini15Flash } from '@genkit-ai/googleai'
+
+// 🔥 FILL THIS OUT FIRST! 🔥
+// Get your Gemini API key by:
+// - Selecting "Add Gemini API" in the "Project IDX" panel in the sidebar
+// - Or by visiting https://g.co/ai/idxGetGeminiKey
+// This can also be provided as the GOOGLE_GENAI_API_KEY environment variable.
+//
+
+const apiKey = process.env.GOOGLE_GENAI_API_KEY;  // Or set your API key
 
 export const ai = genkit({
-    plugins: [vertexAI()],
+    plugins: [googleAI({apiKey: apiKey})],
 });
-
-import { logger } from 'genkit/logging';
-logger.setLogLevel('debug');
 
 const outputSchema = z.object({
     title: z.string().describe('The short title for this dish'),
@@ -14,17 +20,15 @@ const outputSchema = z.object({
     tags: z.array(z.string()).describe('Two to Four 1-word keyword tags for the recipie')
 });
 
-
-const inputSchema = z.object({
-    photoUrl: z.string()
-});
-
 const flowVersion = ai.defineFlow({
     name: 'recipieFlow',
-    inputSchema: inputSchema,
+    inputSchema: z.object({
+        photoUrl: z.string()
+    }),
     outputSchema: outputSchema.or(z.null()),
 }, async (input) => {
-    const result = (await ai.generate({
+    console.log('Calling flow');
+        const result = (await ai.generate({
         model: gemini15Flash,
         messages: [
             { role: 'system', content: [{ text: 'Provide a delicious recipie for this user' }] },
@@ -43,35 +47,6 @@ const flowVersion = ai.defineFlow({
     return result.output
 });
 
-// const promptVersion = ai.definePrompt({
-//     model: gemini15Flash,
-//     name: 'recipiePrompt',
-//     input: {
-//         schema: inputSchema
-//     },
-//     output: {
-//         schema: outputSchema,
-//         format: 'json'
-//     }
-// }, 
-// 'Use the ingredients from this image {{media url=photoUrl}}'
-// );
-
-// promptVersion({
-//     photoUrl: "https://www.mercy.net/content/dam/mercy/en/images/orange-or-banana-20381.jpg"
-// }).then((result) => {
-//     console.log("Got prompt result");
-//     const output = result.output;
-//     console.log(output.title);
-//     return result
-// });
-
-flowVersion({
-    photoUrl: 'https://www.mercy.net/content/dam/mercy/en/images/orange-or-banana-20381.jpg'
-}).then(result => {
-    console.log("Got flow result");
-    console.log(result);
-});
 
 ai.startFlowServer({ 
     flows: [flowVersion]
