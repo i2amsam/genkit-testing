@@ -26,7 +26,8 @@
         default.openFiles = [ "client/index.html" "server/src/index.js" ];
       };
       onStart = {
-        start-server = "npx tsx --watch src/index.ts";
+        auth-server = "cd server && npm run authenticate";
+        start-server = "cd server && npm run dev";
       };
     };
     # Enable previews and customize configuration
