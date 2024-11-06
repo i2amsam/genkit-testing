@@ -26,14 +26,14 @@ form.onsubmit = async (ev) => {
     });
 
     var request = new XMLHttpRequest();
-    request.open("POST", "http://localhost:3400/recipieFlow");
+    request.open("POST", "http://localhost:3400/recipeFlow");
     request.setRequestHeader('Content-Type', 'application/json')
     request.onload = function (response) {
         // Read the response and interpret the output as markdown.
         let md = new MarkdownIt();
 
         response = JSON.parse(request.responseText).result;
-        output.innerHTML = md.render(response.recipie);
+        output.innerHTML = md.render(response.recipe);
     };
     request.send(payload);
     return false;

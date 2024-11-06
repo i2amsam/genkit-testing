@@ -15,12 +15,12 @@ export const ai = genkit({
 
 const outputSchema = z.object({
     title: z.string().describe('The short title for this dish'),
-    recipie: z.string().describe('Markdown text of the recipie'),
-    tags: z.array(z.string()).describe('Two to Four 1-word keyword tags for the recipie')
+    recipe: z.string().describe('Markdown text of the recipe'),
+    tags: z.array(z.string()).describe('Two to Four 1-word keyword tags for the recipe')
 });
 
 const flowVersion = ai.defineFlow({
-    name: 'recipieFlow',
+    name: 'recipeFlow',
     inputSchema: z.object({
         photoUrl: z.string()
     }),
@@ -30,9 +30,9 @@ const flowVersion = ai.defineFlow({
         const result = (await ai.generate({
         model: gemini15Flash,
         messages: [
-            { role: 'system', content: [{ text: 'Provide a delicious recipie for this user' }] },
+            { role: 'system', content: [{ text: 'Provide a delicious recipe for this user' }] },
             { role: 'user', content: [
-                    { text: 'Use the ingrediants from this image'}, 
+                    { text: 'Use the ingredients from this image'}, 
                     { media: { url: input.photoUrl }} 
                 ]
             },
