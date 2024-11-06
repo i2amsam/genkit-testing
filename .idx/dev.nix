@@ -10,6 +10,7 @@
   # Sets environment variables in the workspace
   env = {
     GENKIT_ENV = "dev";
+    GOOGLE_GENAI_API_KEY = "TODO";
   };
   idx = {
     # Search for the extensions you want on https://open-vsx.org/ and use "publisher.id"

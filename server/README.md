@@ -6,8 +6,8 @@
 
 1. `cd server/`
 2. Install dependencies with `npm i`
-3. Set your Google GenAI API key environement variable
-`export GOOGLE_GENAI_API_KEY=<your api key>`
+3. Set your Google GenAI API key environment variable in `idx/dev.nix`
+`GOOGLE_GENAI_API_KEY = "<your api key>";`
 4. Start the flow server with `npx tsx --watch src/index.ts`
 
 
