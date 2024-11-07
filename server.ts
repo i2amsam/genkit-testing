@@ -5,18 +5,15 @@ import express from "express";
 
 const port = process.env.PORT || 3000;
 
-const apiKey = process.env.GOOGLE_GENAI_API_KEY; // Or set your API key
-
 export const ai = genkit({
-    plugins: [googleAI({ apiKey: apiKey })],
+    plugins: [googleAI()],
 });
 
 const outputSchema = z.object({
-    title: z.string().describe("The short title for this dish"),
-    recipe: z.string().describe("Markdown text of the recipe"),
+    recipe: z.string().describe("A recipie, starting with a title, in markdown format"),
     tags: z
         .array(z.string())
-        .describe("Two to Four 1-word keyword tags for the recipe"),
+        .describe("Two to Four 1-word keyword tags for the recipe, lowercase only"),
 });
 
 const recipeFlow = ai.defineFlow(
@@ -24,22 +21,22 @@ const recipeFlow = ai.defineFlow(
         name: "recipeFlow",
         inputSchema: z.object({
             photoUrl: z.string(),
+            prompt: z.string(),
         }),
         outputSchema: outputSchema.or(z.null()),
     },
     async (input) => {
-        console.log("Calling flow");
         const result = await ai.generate({
             model: gemini15Flash,
             messages: [
                 {
                     role: "system",
-                    content: [{ text: "Provide a delicious recipe for this user" }],
+                    content: [{ text: "Make sure the recipie is no longer than 10 steps." }],
                 },
                 {
                     role: "user",
                     content: [
-                        { text: "Use the ingredients from this image" },
+                        { text: input.prompt },
                         { media: { url: input.photoUrl } },
                     ],
                 },
@@ -58,10 +55,13 @@ async function createServer() {
     const app = express();
     app.use(express.static('static'));
     app.post("/api/generate", express.json(), async (req, res) => {
-        const { image } = req.body;
+        const { image, prompt } = req.body;
         let imageUrl = `./static/images/${image}`;
         const imageBase64 = await fs.readFile(imageUrl, { encoding: 'base64' });
-        const result = await recipeFlow({ photoUrl: `data:image/jpeg;base64,${imageBase64}` });
+        const result = await recipeFlow({ 
+            photoUrl: `data:image/jpeg;base64,${imageBase64}`, 
+            prompt: prompt
+        });
         return res.send(result);
     });
     app.listen(port);

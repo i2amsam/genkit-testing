@@ -141,3 +141,23 @@ body {
   button:hover {
     opacity: 0.95;
   }
+
+  .output {
+    padding: 10;
+    border-radius: 8px;
+    box-shadow:
+      0 0 0 2px darkgray inset,
+      0 0 0 4px #fff inset;
+  }
+
+  .output .tag {
+    cursor: pointer;
+    border-radius: 8px;
+    display: inline;
+    margin: 10px 5px;
+    padding: 4px;
+    background-color: rgb(144, 202, 249);
+    &:hover {
+      background-color: rgb(100, 169, 226);
+    }
+  }

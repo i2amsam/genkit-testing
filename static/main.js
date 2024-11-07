@@ -8,6 +8,7 @@ form.onsubmit = async (ev) => {
     await fetch("/api/generate", {
         method: "POST",
         body: JSON.stringify({
+            prompt: data.get('prompt'),
             image: data.get('chosenImage'),
         }),
         headers: {
@@ -18,6 +19,12 @@ form.onsubmit = async (ev) => {
     }).then(response => {
         let md = window.markdownit();
         output.innerHTML = md.render(response.recipe);
+        for (const element of response.tags) {
+            const tag = document.createElement('div');
+            tag.setAttribute("class", "tag")
+            tag.innerHTML = element
+            output.appendChild(tag)
+        }
     });
     return false;
 }

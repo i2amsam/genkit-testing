@@ -1,12 +1,13 @@
 {
-    "name": "go-example",
+    "name": "genkit-gemin-web-example",
     "version": "1.0.0",
-    "description": "This is a simple demonstration web app using the [Google AI Go SDK](https://github.com/google/generative-ai-go) to generate recipes for images.",
+    "description": "This is a simple demonstration web app using the [Firebase Genkit SDK](https://github.com/firebase/genkit) to generate recipes for images.",
     "main": "index.js",
     "scripts": {
       "dev": "npx tsx ./server.ts --watch"
     },
     "dependencies": {
+      "genkit": "0.9.0-dev.3",
       "@genkit-ai/googleai": "0.9.0-dev.3",
       "express": "^4.17.13",
       "zod": "^3.23.8",
