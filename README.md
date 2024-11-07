@@ -15,6 +15,6 @@
   </picture>
 </a>
 
-This is a simple demonstration web app using the [Google AI Go SDK](https://github.com/google/generative-ai-go) to generate recipes for images.
+This is a simple demonstration web app using the [Firebase Genkit Library](https://github.com/firebase/genkit) with Genkit to generate recipes for images.
 
-To get started, get an API key at https://makersuite.google.com/app/apikey and enter it in `.idx/dev.nix` and rebuild the environment.
+To get started, get an API key at https://g.co/ai/idxGetGeminiKey and enter it in `.idx/dev.nix` and rebuild the environment.
