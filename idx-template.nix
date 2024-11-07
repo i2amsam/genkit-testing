@@ -23,9 +23,9 @@
     mkdir -p "$out/static/"
     cp -r ${./.idx}/. "$out/.idx/"
     cp -r ${./static}/. "$out/static/"
-    cp -r ${./package.json} "$out/"
-    cp -r ${./package-lock.json} "$out/"
-    cp -r ${./server.ts} "$out/"
+    cp -f ${./package.json} "$out/package.json"
+    cp -f ${./package-lock.json} "$out/package-lock.json"
+    cp -f ${./server.ts} "$out/server.ts"
     chmod -R +w "$out"
   '';
 }
