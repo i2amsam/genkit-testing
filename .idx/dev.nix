@@ -1,44 +1,37 @@
 # To learn more about how to use Nix to configure your environment
 # see: https://developers.google.com/idx/guides/customize-idx-env
 { pkgs, ... }: {
-  # Which nixpkgs channel to use.
-  channel = "stable-24.05"; # or "unstable"
-  # Use https://search.nixos.org/packages to find packages
+  channel = "stable-24.05"; # "stable-23.11" or "unstable"
+  # Use https://search.nixos.org/packages to  find packages
   packages = [
     pkgs.nodejs_20
   ];
   # Sets environment variables in the workspace
   env = {
     GENKIT_ENV = "dev";
-    GOOGLE_GENAI_API_KEY = "TODO";
+    GOOGLE_GENAI_API_KEY = "";
   };
-  idx = {
-    # Search for the extensions you want on https://open-vsx.org/ and use "publisher.id"
-    extensions = [
-      # "vscodevim.vim"
-    ];
-    workspace = {
-      # Runs when a workspace is first created with this `dev.nix` file
-      onCreate = {
-        npm-install-client = "cd client && npm ci --no-audit --prefer-offline --no-progress --timing";
-        npm-install-server = "cd server && npm ci --no-audit --prefer-offline --no-progress --timing";
-
-        # Open editors for the following files by default, if they exist:
-        default.openFiles = [ "client/index.html" "server/src/index.js" ];
-      };
-      onStart = {
-        # auth-server = "cd server && npm run authenticate";
-        start-server = "cd server && npm run dev";
-      };
+  # search for the extension on https://open-vsx.org/ and use "publisher.id"
+  idx.extensions = [
+    "golang.go"
+  ];
+  idx.workspace = {
+    # Runs when a workspace is first created with this `dev.nix` file
+    onCreate = {
+      npm-install = "npm ci --no-audit --prefer-offline --no-progress --timing";
+      default.openFiles = [ "static/index.html" "server.ts" ];
     };
-    # Enable previews and customize configuration
+    # To run something each time the workspace is (re)started, use the `onStart` hook
+  };
+  # preview configuration, identical to monospace.json
+  idx.previews = {
+    enable = true;
     previews = {
-      enable = true;
-      previews = {
-        web = {
-          command = [ "npm" "run" "dev" "--" "--port" "$PORT" ];
-          manager = "web";
-          cwd = "client";
+      web = {
+        command = [ "npm" "run" "dev" ];
+        manager = "web";
+        env = {
+          PORT = "$PORT";
         };
       };
     };

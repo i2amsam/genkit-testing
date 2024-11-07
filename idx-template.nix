@@ -20,11 +20,12 @@
   bootstrap = ''
     mkdir "$out"
     mkdir -p "$out/.idx/"
-    mkdir -p "$out/client/"
-    mkdir -p "$out/server/"
+    mkdir -p "$out/static/"
     cp -r ${./.idx}/. "$out/.idx/"
-    cp -r ${./client}/. "$out/client/"
-    cp -r ${./server}/. "$out/server/"
+    cp -r ${./static}/. "$out/static/"
+    cp -r ${./package.json} "$out/"
+    cp -r ${./package-lock.json} "$out/"
+    cp -r ${./server.ts} "$out/"
     chmod -R +w "$out"
   '';
 }
