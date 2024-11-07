@@ -10,7 +10,7 @@ export const ai = genkit({
 });
 
 const outputSchema = z.object({
-    recipe: z.string().describe("A recipie, starting with a title, in markdown format"),
+    recipe: z.string().describe("A recipe, starting with a title, in markdown format"),
     tags: z
         .array(z.string())
         .describe("Two to Four 1-word keyword tags for the recipe, lowercase only"),
@@ -31,7 +31,7 @@ const recipeFlow = ai.defineFlow(
             messages: [
                 {
                     role: "system",
-                    content: [{ text: "Make sure the recipie is no longer than 10 steps." }],
+                    content: [{ text: "Make sure the recipe is no longer than 10 steps." }],
                 },
                 {
                     role: "user",
