@@ -46,7 +46,6 @@ const recipeFlow = ai.defineFlow(
                 schema: outputSchema,
             },
         });
-        console.log('result: ', result.output);
         return result.output;
     }
 );
