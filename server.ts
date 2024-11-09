@@ -9,59 +9,48 @@ export const ai = genkit({
     plugins: [googleAI()],
 });
 
-const outputSchema = z.object({
-    recipe: z.string().describe("A recipe, starting with a title, in markdown format"),
-    tags: z
-        .array(z.string())
-        .describe("Two to Four 1-word keyword tags for the recipe, lowercase only"),
-});
-
-const recipeFlow = ai.defineFlow(
-    {
-        name: "recipeFlow",
-        inputSchema: z.object({
+const recipiePrompt = ai.definePrompt({
+    name: 'Recipies prompt',
+    model: gemini15Flash,
+    input: {
+        schema: z.object({
             photoUrl: z.string(),
-            prompt: z.string(),
-        }),
-        outputSchema: outputSchema.or(z.null()),
+            userPrompt: z.string(),
+        })
     },
-    async (input) => {
-        const result = await ai.generate({
-            model: gemini15Flash,
-            messages: [
-                {
-                    role: "system",
-                    content: [{ text: "Make sure the recipe is no longer than 10 steps." }],
-                },
-                {
-                    role: "user",
-                    content: [
-                        { text: input.prompt },
-                        { media: { url: input.photoUrl } },
-                    ],
-                },
-            ],
-            output: {
-                format: "json",
-                schema: outputSchema,
-            },
-        });
-        return result.output;
+    output: {
+        format: 'json',
+        schema: z.object({
+            recipe: z.string()
+                .describe("A recipe, starting with a title, in markdown format"),
+            tags: z.array(z.string())
+                .describe("Two to Four 1-word keyword tags for the recipe, lowercase only"),
+        })
     }
-);
+},
+`
+You're an expert chef.  Make sure to follow all instructions.
+
+The user has asked 
+{{userPrompt}} 
+
+and provided {{media url=photoUrl}}
+`
+)
 
 async function createServer() {
     const app = express();
     app.use(express.static('static'));
     app.post("/api/generate", express.json(), async (req, res) => {
-        const { image, prompt } = req.body;
+        const { image, userPrompt } = req.body;
         let imageUrl = `./static/images/${image}`;
         const imageBase64 = await fs.readFile(imageUrl, { encoding: 'base64' });
-        const result = await recipeFlow({ 
-            photoUrl: `data:image/jpeg;base64,${imageBase64}`, 
-            prompt: prompt
+
+        const result = await recipiePrompt({
+            photoUrl: `data:image/jpeg;base64,${imageBase64}`,
+            userPrompt: userPrompt
         });
-        return res.send(result);
+        return res.send(result.output);
     });
     app.listen(port);
     console.log("Server started: http://localhost:" + port);

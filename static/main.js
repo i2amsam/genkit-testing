@@ -8,7 +8,7 @@ form.onsubmit = async (ev) => {
     await fetch("/api/generate", {
         method: "POST",
         body: JSON.stringify({
-            prompt: data.get('prompt'),
+            userPrompt: data.get('prompt'),
             image: data.get('chosenImage'),
         }),
         headers: {
