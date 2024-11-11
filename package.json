@@ -4,7 +4,7 @@
     "description": "This is a simple demonstration web app using the [Firebase Genkit SDK](https://github.com/firebase/genkit) to generate recipes for images.",
     "main": "index.js",
     "scripts": {
-        "dev": "GENKIT_ENV=dev tsx --watch server.ts"
+        "dev": "GENKIT_ENV=dev npx tsx --watch server.ts"
     },
     "dependencies": {
         "@genkit-ai/googleai": " 0.9.0-rc.0",
