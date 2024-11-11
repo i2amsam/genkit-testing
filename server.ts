@@ -13,33 +13,38 @@ export const ai = genkit({
 logger.setLogLevel('debug')
 
 const recipiePrompt = ai.definePrompt({
-    name: 'Recipies prompt',
-    model: gemini15Flash,
-    input: {
-        schema: z.object({
-            photoUrl: z.string(),
-            userPrompt: z.string(),
-        })
+        name: 'Recipies prompt',
+        model: gemini15Flash,
+        input: {
+            schema: z.object({
+                photoUrl: z.string(),
+                userPrompt: z.string(),
+            })
+        },
+        output: {
+            format: 'json',
+            schema: z.object({
+                recipe: z.string()
+                    .describe("A recipe, starting with a title, in markdown format"),
+                tags: z.array(z.string())
+                    .describe("Two to Four 1-word keyword tags for the recipe, lowercase only"),
+            })
+        },
     },
-    output: {
-        format: 'json',
-        schema: z.object({
-            recipe: z.string()
-                .describe("A recipe, starting with a title, in markdown format"),
-            tags: z.array(z.string())
-                .describe("Two to Four 1-word keyword tags for the recipe, lowercase only"),
-        })
-    }
-},
-`
-You're an expert chef.  Make sure to follow all instructions.
+    `
+    You're an expert chef.  Make sure to follow all instructions.
 
-The user has asked 
-{{userPrompt}} 
+    The user has asked 
+    ====
+    {{userPrompt}} 
+    ====
 
-and provided {{media url=photoUrl}}
-`
-)
+    and provided this image: 
+    ====
+    {{media url=photoUrl}}
+    ====
+    `
+);
 
 async function createServer() {
     const app = express();
