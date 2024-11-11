@@ -1,6 +1,7 @@
 import { gemini15Flash, googleAI } from "@genkit-ai/googleai";
 import * as fs from 'fs/promises';
 import { genkit, z } from 'genkit';
+import { logger } from 'genkit/logging'
 import express from "express";
 
 const port = process.env.PORT || 3000;
@@ -8,6 +9,8 @@ const port = process.env.PORT || 3000;
 export const ai = genkit({
     plugins: [googleAI()],
 });
+
+logger.setLogLevel('debug')
 
 const recipiePrompt = ai.definePrompt({
     name: 'Recipies prompt',

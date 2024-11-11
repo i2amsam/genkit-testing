@@ -32,6 +32,7 @@
         manager = "web";
         env = {
           PORT = "$PORT";
+          GENKIT_ENV = "dev";
         };
       };
     };
