@@ -19,4 +19,4 @@ This is a simple demonstration web app using the [Firebase Genkit Library](https
 
 To get started, get an API key at https://g.co/ai/idxGetGeminiKey and enter it in `.idx/dev.nix` and rebuild the environment.
 
-After running this code, open a new terminal in IDX and run `genkit ui:start` to start the interactive Genkit Developer UI and inspect the calls to Gemini.
+After running this code, open a new terminal (`Ctrl`+ `` ` ``) and run `genkit ui:start` to start the interactive Genkit Developer UI and inspect the calls to Gemini.
