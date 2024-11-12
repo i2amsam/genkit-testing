@@ -18,7 +18,7 @@
     # Runs when a workspace is first created with this `dev.nix` file
     onCreate = {
       npm-install = "npm ci --no-audit --prefer-offline --no-progress --timing";
-      default.openFiles = [ "static/index.html" "server.ts" ];
+      default.openFiles = [ "README.md" "static/index.html" "server.ts" ];
     };
     # To run something each time the workspace is (re)started, use the `onStart` hook
   };
