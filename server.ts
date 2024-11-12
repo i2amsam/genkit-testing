@@ -11,7 +11,6 @@ export const ai = genkit({
 });
 
 logger.setLogLevel('debug')
-
 const recipiePrompt = ai.definePrompt({
         name: 'Recipies prompt',
         model: gemini15Flash,
@@ -30,8 +29,7 @@ const recipiePrompt = ai.definePrompt({
                     .describe("Two to Four 1-word keyword tags for the recipe, lowercase only"),
             })
         },
-    },
-    `
+    },`
     You're an expert chef.  Make sure to follow all instructions.
 
     The user has asked 
@@ -43,6 +41,7 @@ const recipiePrompt = ai.definePrompt({
     ====
     {{media url=photoUrl}}
     ====
+
     `
 );
 

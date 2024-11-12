@@ -1,3 +1,4 @@
+
 let form = document.querySelector('form');
 let output = document.querySelector('.output');
 

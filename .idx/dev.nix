@@ -7,9 +7,8 @@
     pkgs.nodejs_20
   ];
   # Sets environment variables in the workspace
-  env = {
-    GENKIT_ENV = "dev";
-    #Get a API key from and put it here https://g.co/ai/idxGetGeminiKey 
+  env = {    
+    #TODO Get a API key from https://g.co/ai/idxGetGeminiKey 
     GOOGLE_GENAI_API_KEY = "TODO"; 
   };
   # search for the extension on https://open-vsx.org/ and use "publisher.id"
