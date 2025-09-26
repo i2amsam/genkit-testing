@@ -4,5 +4,6 @@
   "categories": [
     "Web app"
   ],
-  "publisher": "Google"
+  "publisher": "Google",
+  "params": []
 }
