@@ -4,5 +4,6 @@
   "categories": ["Web app", "Backend"],
   "icon": "https://firebase.google.com/static/images/brand-guidelines/logo-vertical.png",
   "website": "https://firebase.google.com/docs/genkit",
-  "publisher": "Google LLC"
+  "publisher": "Google LLC",
+  "params"  [],
 }
